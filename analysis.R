@@ -3,6 +3,7 @@ library(DESeq2)
 library(gtools)
 library(ggplot2)
 library(dplyr)
+library(ggrepel)
 
 # There is a tutorial that goes deep into Deseq2 here: bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
 
@@ -35,9 +36,9 @@ design = read.table()
 # To be sure that we have the same order in both files we get a sorted vector of our samples
 sorted_samples = mixedsort(rownames(design))
 
-#We reorder the two dataframes using our vector.
-expression = expression[,sorted_samples]
-design = design[sorted_samples,]
+#We want reorder the two dataframes using our vector.
+expression = expression
+design = design
 
 #To simplify the design we combine both our contitions together.
 #unite makes a combined version of our two columns
@@ -47,7 +48,7 @@ combined = unite(design, 'groups', c('Day','Infection'))
 design_formula = as.formula('~ groups')
 
 #Now we can create our deseq object using the count dataframe, design dataframe and the formula.
-dds = DESeqDataSetFromMatrix(expression, colData = combined, design = design_formula)
+dds = DESeqDataSetFromMatrix()
 
 #We filter lowly epxressed genes. This is mostly for performances purposes.
 # Since we use a LOGICAL operator here, we will get ids back. Those ids correspond to the row number of the rows that fit the criteria we are using.
@@ -131,15 +132,8 @@ dds = DESeq(dds)
 
 res <- results(dds, contrast = c('groups', 'D8_Mix', 'D8_Arm'))
 
+source('volcano.R')
 
 ###Exercies: Find the differentialy expressed genes between Day 32 Arm and Day 32 c13
 
 ###############################
-
-
-
-
-
-
-source('volcano.R')
-
