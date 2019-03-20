@@ -20,7 +20,7 @@ setwd('')
 # 0610009E02Rik           1           2           2           3           3           5           2           0           0             7
 # 0610009L18Rik          37          48          55          63          55          70          29          59          59            54
 # 0610009O20Rik         142         132         162         194         165         214         146         219         172           169
-expression = read.table(file = '')
+expression = read.table()
 #Exercise: Find the right arguments to load the data to be a dataframe with samples in the rownames and conditions in the colnames like below:
 # Day Infection
 # L1-Seq34_S1    D8       Arm
@@ -30,7 +30,7 @@ expression = read.table(file = '')
 # L5-Seq34_S5    D8       Arm
 # L6-Seq34_S6    D8       c13
 # L7-Seq34_S7    D8       c13
-design = read.table(file='')
+design = read.table()
 
 # To be sure that we have the same order in both files we get a sorted vector of our samples
 sorted_samples = mixedsort(rownames(design))
@@ -135,3 +135,11 @@ res <- results(dds, contrast = c('groups', 'D8_Mix', 'D8_Arm'))
 ###Exercies: Find the differentialy expressed genes between Day 32 Arm and Day 32 c13
 
 ###############################
+
+
+
+
+
+
+source('volcano.R')
+
